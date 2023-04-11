@@ -12,6 +12,9 @@
         ></PostItem>
       </div>
     </div>
+    <AppCard>
+      <PostDetailView :id="2"></PostDetailView>
+    </AppCard>
   </div>
 </template>
 
@@ -20,6 +23,8 @@ import PostItem from '@/components/posts/PostItem.vue';
 import { getPosts } from '@/api/posts';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
+import PostDetailView from './PostDetailView.vue';
+import AppCard from '@/components/AppCard.vue';
 
 const router = useRouter();
 const posts = ref([]);
