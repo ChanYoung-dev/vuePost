@@ -31,6 +31,11 @@
                 >게시글</RouterLink
               >
             </li>
+            <li class="nav-item">
+              <RouterLink to="/nested" class="nav-link" active-class="active"
+                >Nested</RouterLink
+              >
+            </li>
           </ul>
           <div class="d-fle">
             <button class="btn btn-outline-light" type="button" @click="goPage">
