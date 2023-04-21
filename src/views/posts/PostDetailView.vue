@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h2>{{ form.title }}</h2>
-    <p>{{ form.content }}</p>
-    <p class="text-muted">{{ form.createdAt }}</p>
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+    <p class="text-muted">{{ post.createdAt }}</p>
     <hr class="my-4" />
     <div class="row g-2">
       <div class="col-auto">
@@ -41,21 +41,21 @@ const router = useRouter();
 /**
  * ref
  * 장) 객체 할당 가능
- * 단) form.value.title, form.value.content
+ * 단) post.value.title, post.value.content
  * 장) 일관성
  *
  * reactvie
  * 단) 객체 할당 불가능
- * 장) form.title, form.content
+ * 장) post.title, post.content
  */
-const form = ref({});
+const post = ref({});
 
-const fetchPost = () => {
-  const data = getPostById(props.id);
-  form.value = { ...data };
+const fetchPost = async () => {
+  const { data } = await getPostById(props.id);
+  post.value = { ...data };
   //reactive로 했다면..
-  // form.title = data.title;
-  // form.content = data.content;
+  // post.title = data.title;
+  // post.content = data.content;
 };
 fetchPost();
 const goListPage = () => router.push({ name: 'PostList' });
