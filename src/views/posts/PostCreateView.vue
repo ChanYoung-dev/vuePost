@@ -49,7 +49,7 @@ const save = () => {
   try {
     createPost({
       ...form.value,
-      createdAt: Date.now(),
+      createdAt: new Date().toLocaleString(),
     });
     router.push({ name: 'PostList' });
   } catch (error) {

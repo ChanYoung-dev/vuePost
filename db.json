@@ -25,16 +25,16 @@
       "createdAt": "2023-05-05"
     },
     {
-      "id": 1,
-      "title": "제목1",
-      "content": "내용1",
-      "createdAt": "2023-01-01"
+      "title": "지오야",
+      "content": "안녕 반가워 !",
+      "createdAt": 1682090022809,
+      "id": 6
     },
     {
-      "title": "지오야",
-      "content": "안녕",
-      "createdAt": 1682088653664,
-      "id": 6
+      "title": "지오는",
+      "content": "jiho",
+      "createdAt": "2023. 4. 22. 오전 12:17:38",
+      "id": 7
     }
   ]
 }

@@ -21,7 +21,7 @@
         </button>
       </div>
       <div class="col-auto">
-        <button class="btn btn-outline-danger">삭제</button>
+        <button class="btn btn-outline-danger" @click="remove">삭제</button>
       </div>
     </div>
   </div>
@@ -29,7 +29,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
-import { getPostById } from '@/api/posts';
+import { getPostById, deletePost } from '@/api/posts';
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -41,23 +41,44 @@ const router = useRouter();
 /**
  * ref
  * 장) 객체 할당 가능
- * 단) post.value.title, post.value.content
+ * 단) form.value.title, form.value.content
  * 장) 일관성
  *
  * reactvie
  * 단) 객체 할당 불가능
- * 장) post.title, post.content
+ * 장) form.title, form.content
  */
-const post = ref({});
+const post = ref({
+  title: null,
+  content: null,
+  createdAt: null,
+});
 
 const fetchPost = async () => {
-  const { data } = await getPostById(props.id);
-  post.value = { ...data };
-  //reactive로 했다면..
-  // post.title = data.title;
-  // post.content = data.content;
+  try {
+    const { data } = await getPostById(props.id);
+    setPost(data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+const setPost = ({ title, content, createdAt }) => {
+  post.value.title = title;
+  post.value.content = content;
+  post.value.createdAt = createdAt;
 };
 fetchPost();
+const remove = async () => {
+  try {
+    if (confirm('삭제 하시겠습니까?') === false) {
+      return;
+    }
+    await deletePost(props.id);
+    router.push({ name: 'PostList' });
+  } catch (error) {
+    console.error(error);
+  }
+};
 const goListPage = () => router.push({ name: 'PostList' });
 const goEditPage = () =>
   router.push({ name: 'PostEdit', params: { id: props.id } });
