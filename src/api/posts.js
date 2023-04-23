@@ -1,21 +1,23 @@
-import axios from 'axios';
+import { posts } from '.';
 
-export function getPosts() {
-  return axios.get('http://localhost:3001/posts');
+export function getPosts(params) {
+  // return axios.get('http://localhost:3001/posts', { params });
+  return posts.get('/', { params });
 }
 
 export function getPostById(id) {
-  return axios.get(`http://localhost:3001/posts/${id}`);
+  // return axios.get(`http://localhost:3001/posts/${id}`);
+  return posts.get(id); // id를 문자열로 강제로 변환
 }
 
 export function createPost(data) {
-  return axios.post('http://localhost:3001/posts', data);
+  return posts.post('', data);
 }
 
 export function updatePost(id, data) {
-  return axios.put(`http://localhost:3001/posts/${id}`, data);
+  return posts.put(id, data);
 }
 
 export function deletePost(id) {
-  return axios.delete(`http://localhost:3001/posts/${id}`);
+  return posts.delete(`/${id}`);
 }

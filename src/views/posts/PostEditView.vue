@@ -63,7 +63,10 @@ const setForm = ({ title, content }) => {
 fetchPost();
 const edit = async () => {
   try {
-    await updatePost(id, { ...form.value, createdAt: Date.now() });
+    await updatePost(id, {
+      ...form.value,
+      createdAt: new Date().toLocaleString(),
+    });
     router.push({ name: 'PostDetail', params: { id } });
   } catch (error) {
     console.error(error);
