@@ -38,7 +38,7 @@ const routes = [
     component: PostDetailView,
     name: 'PostDetail',
     props: true,
-    // props: route => ({ id: parseInt(route.params.id) }), 숫자로 한 이유는 우리가 임의로 posts.js json데이터를 만들때 id는 숫자이기때문이다
+    // props: route => ({ id: parseInt(route.params.id) }), 숫자로 한 이유는 우리가 임의로 posts.js json데이터를 만들때 id는 숫자이기때문이다 값을 찾아오려면 숫자로해야한다
     // 하지만 db-json을 사용했을때 문자열도 인식하기때문에 문자로 넣었다.
   },
   {

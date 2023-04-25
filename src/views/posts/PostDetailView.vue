@@ -34,7 +34,7 @@ import { ref } from 'vue';
 
 const props = defineProps({
   // id: Number, 숫자로 한 이유는 우리가 임의로 posts.js json데이터를 만들때 id는 숫자이기때문이다 값을 찾아오려면 숫자로해야한다
-  id: String,
+  id: [String, Number],
 });
 
 const router = useRouter();
