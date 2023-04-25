@@ -7,7 +7,8 @@ export function getPosts(params) {
 
 export function getPostById(id) {
   // return axios.get(`http://localhost:3001/posts/${id}`);
-  return posts.get(id); // id를 문자열로 강제로 변환
+  //return posts.get(id); // 파라미터가 문자만 들어갈수있다.
+  return posts.get(`/${id}`);
 }
 
 export function createPost(data) {
@@ -15,7 +16,7 @@ export function createPost(data) {
 }
 
 export function updatePost(id, data) {
-  return posts.put(id, data);
+  return posts.patch(`/${id}`, data);
 }
 
 export function deletePost(id) {
