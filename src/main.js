@@ -7,8 +7,14 @@ import funcPlugins from './plugins/func';
 import objPlugins from './plugins/obj';
 import persons from './plugins/person';
 import globalComponents from '@/plugins/global-components';
+import globalDirectives from './plugins/global-directives';
+import focus from '@/directives/focus';
+import dayjs from './plugins/dayjs';
 
 const app = createApp(App);
+app.directive('foucs', focus);
+app.use(dayjs);
+app.use(globalDirectives);
 app.use(globalComponents);
 app.use(funcPlugins);
 app.use(objPlugins, { name: '짐코딩' });
