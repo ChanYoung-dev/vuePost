@@ -10,23 +10,29 @@
 
     <hr class="my-4" />
 
-    <AppGrid :items="posts">
-      <template v-slot="{ item }">
-        <PostItem
-          :title="item.title"
-          :content="item.content"
-          :created-at="item.createdAt"
-          @click="goPage(item.id)"
-          @modal="openModal(item)"
-        ></PostItem>
-      </template>
-    </AppGrid>
+    <AppLoading v-if="loading" />
 
-    <AppPagination
-      :current-page="params._page"
-      :page-count="pageCount"
-      @page="page => (params._page = page)"
-    />
+    <AppError v-else-if="error" :message="error.message" />
+
+    <template v-else>
+      <AppGrid :items="posts">
+        <template v-slot="{ item }">
+          <PostItem
+            :title="item.title"
+            :content="item.content"
+            :created-at="item.createdAt"
+            @click="goPage(item.id)"
+            @modal="openModal(item)"
+          ></PostItem>
+        </template>
+      </AppGrid>
+
+      <AppPagination
+        :current-page="params._page"
+        :page-count="pageCount"
+        @page="page => (params._page = page)"
+      />
+    </template>
 
     <Teleport to="#modal">
       <PostModal
@@ -55,9 +61,9 @@ import { getPosts } from '@/api/posts';
 import { ref, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
 import { computed } from 'vue';
+import { useAxios } from '@/hooks/useAxios';
 
 const router = useRouter();
-const posts = ref([]);
 const params = ref({
   _sort: 'createdAt',
   _order: 'desc',
@@ -65,21 +71,27 @@ const params = ref({
   _limit: 3,
   title_like: '',
 });
+const {
+  response,
+  data: posts,
+  error,
+  loading,
+} = useAxios('/posts', { params });
 // pagination
-const totalCount = ref(0);
+const totalCount = computed(() => response.value.headers['x-total-count']);
 const pageCount = computed(() =>
   Math.ceil(totalCount.value / params.value._limit),
 );
-const fetchPosts = async () => {
-  try {
-    const { data, headers } = await getPosts(params.value);
-    posts.value = data;
-    totalCount.value = headers['x-total-count'];
-  } catch (error) {
-    console.error(error);
-  }
-};
-watchEffect(fetchPosts);
+// const fetchPosts = async () => {
+//   try {
+//     const { data, headers } = await getPosts(params.value);
+//     posts.value = data;
+//     totalCount.value = headers['x-total-count'];
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+// watchEffect(fetchPosts);
 // fetchPosts();
 const goPage = id => {
   // router.push(`/posts/${id}`);
