@@ -6,6 +6,7 @@
   <div v-else>
     <h2>{{ post.title }}</h2>
     <p>{{ post.content }}</p>
+    <p>id: {{ props.id }}, isOdd: {{ isOdd }}</p>
     <p class="text-muted">
       {{ $dayjs(post.createdAt).format('YYYY. MM. DD HH:mm:ss') }}
     </p>
@@ -49,11 +50,14 @@
 </template>
 
 <script setup>
+import { toRef, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
 import { getPostById, deletePost } from '@/api/posts';
 import { ref } from 'vue';
 import { useAlert } from '@/composables/alert';
 import { useAxios } from '@/hooks/useAxios';
+import { computed } from 'vue';
+import { useNumber } from '@/composables/number';
 
 const props = defineProps({
   // id: Number, 숫자로 한 이유는 우리가 임의로 posts.js json데이터를 만들때 id는 숫자이기때문이다 값을 찾아오려면 숫자로해야한다
@@ -61,6 +65,9 @@ const props = defineProps({
 });
 
 const router = useRouter();
+
+const idRef = toRef(props, 'id');
+const { isOdd } = useNumber(idRef);
 
 // const id = route.params.id;
 /**
@@ -95,7 +102,12 @@ const router = useRouter();
 // fetchPost();
 
 const { vAlert, vSuccess } = useAlert();
-const { error, loading, data: post } = useAxios(`/posts/${props.id}`);
+// const { error, loading, data: post } = useAxios(`/posts/${props.id}`);
+const url = computed(() => {
+  console.log('url변경');
+  return `/posts/${props.id}`;
+});
+const { error, loading, data: post } = useAxios(url);
 
 const {
   error: removeError,

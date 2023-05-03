@@ -12,6 +12,8 @@
     <h2>{{ $person.name }}</h2>
     <button class="btn btn-primary" @click="person.say">click person</button>
   </div>
+  {{ countState }}
+  {{ countState.count }}
 </template>
 <script>
 export default {
@@ -23,7 +25,7 @@ export default {
 </script>
 
 <script setup>
-import { inject, ref } from 'vue';
+import { inject, ref, reactive, toRef } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -36,6 +38,12 @@ const items = ref(['사과', '딸기', '포도', '바나나']);
 const person = inject('person');
 console.log('person.name: ', person.name);
 console.log('hello!!');
+
+const count = ref(0);
+const countState = reactive({
+  count: ref(0), //key value가 서로 같으면 생략가능 = count: count,
+});
+console.log('countState.count', countState.count);
 </script>
 
 <style lang="scss" scoped></style>
