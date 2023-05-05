@@ -10,6 +10,7 @@ import globalComponents from '@/plugins/global-components';
 import globalDirectives from './plugins/global-directives';
 import focus from '@/directives/focus';
 import dayjs from './plugins/dayjs';
+import { createPinia } from 'pinia';
 
 const app = createApp(App);
 app.directive('foucs', focus);
@@ -20,6 +21,7 @@ app.use(funcPlugins);
 app.use(objPlugins, { name: '짐코딩' });
 app.use(persons, { name: '홍길동' });
 app.use(router);
+app.use(createPinia());
 app.mount('#app');
 import 'bootstrap/dist/js/bootstrap.js';
 
